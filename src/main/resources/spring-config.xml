@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--
+        每个<bean ...>都有一个id标识，相当于Bean的唯一ID；
+        在userServiceBean中，通过<property name="..." ref="..." />注入了另一个Bean；
+        Bean的顺序不重要，Spring根据依赖关系会自动正确初始化。
+        Spring容器是通过读取XML文件后使用反射完成的
+
+        如果注入的不是Bean，而是boolean、int、String这样的数据类型，则通过value注入
+    -->
+    <bean id="userService" class="xml.service.UserService">
+        <property name="mailService" ref="mailService" />
+    </bean>
+
+    <bean id="mailService" class="xml.service.MailService" />
+
+</beans>
