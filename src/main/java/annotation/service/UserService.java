@@ -1,5 +1,6 @@
 package annotation.service;
 
+import annotation.MetricTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,8 @@ public class UserService {
         return this.users.stream().filter(user -> user.getId() == id).findFirst().orElseThrow();
     }
 
+    //使用注解实现AOP
+    @MetricTime("register")
     public User register(String email, String password, String name) {
         users.forEach((user) -> {
             if (user.getEmail().equalsIgnoreCase(email)) {

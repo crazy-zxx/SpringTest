@@ -33,10 +33,13 @@ import java.util.stream.Collectors;
  *
  * @ComponentScan 它告诉容器，自动搜索当前类所在的包以及子包，
  * 把所有标注为@Component的Bean自动创建出来，并根据@Autowired进行装配。
+ *
+ * @EnableAspectJAutoProxy 会自动查找带有@Aspect的Bean，然后把AOP注入到特定的Bean中。
  */
-@Configuration
+@Configuration      //表示它是一个配置类
 @ComponentScan      //扫描该类所在的包下所有的配置类
 @PropertySource("app.properties") // 表示读取classpath的app.properties
+@EnableAspectJAutoProxy     //允许注入切面
 public class AutoConfig {
 
     /**
@@ -103,6 +106,9 @@ public class AutoConfig {
         UserService userService=context.getBean(UserService.class);
         User user=userService.login("bob@example.com", "password");
         System.out.println(user.getName());
+
+        userService.register("Jack@example.com", "password","Jack");
+
         /**
          * 当我们把一个Bean标记为@Component后，它就会自动为我们创建一个单例（Singleton），
          * 即容器初始化时创建Bean，容器关闭前销毁Bean。
